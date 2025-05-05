@@ -6,7 +6,7 @@ import LandingPage from "./Pages/LandingPage";
 import CandidateDashboard from './Pages/CandidateDashboard';
 import CandidateProfile from './components/CandidateProfile';
 import RecruiterDashboard from './Pages/RecruiterDashboard';
-import LoginPage from './pages/Login';
+import LoginPage from './Pages/Login';
 import SignupPage from './pages/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
 import RoleBasedRoute from './components/RoleBasedRoute';
