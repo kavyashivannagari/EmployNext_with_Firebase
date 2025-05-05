@@ -11,7 +11,7 @@ import SignupPage from './Pages/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
 import RoleBasedRoute from './components/RoleBasedRoute';
 import JobPage from './Pages/Job';
-import JobListing from './pages/JobListing';
+import JobListing from './Pages/JobListing';
 import PostJob from './Pages/PostJob';
 import SavedJobs from './Pages/SaveJob';
 import MyJobs from './Pages/MyJob';
