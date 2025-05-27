@@ -18,7 +18,7 @@ import Footer from '../components/Footer';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { Input } from '../components/ui/input';
-import { Briefcase, MapPin, DollarSign, Clock, Search, BookmarkPlus, BookmarkCheck, X } from 'lucide-react';
+import { Briefcase, MapPin, Clock, Search, BookmarkPlus, BookmarkCheck, X } from 'lucide-react';
 import { Alert, AlertDescription } from '../components/ui/alert';
 import ApplyModal from '../components/ApplicationModal';
 
@@ -41,15 +41,18 @@ const JobListing = () => {
     const fetchJobs = async () => {
       try {
         const jobsData = await getJobs();
-        // Normalize job data to ensure requirements is always an array
-        const normalizedJobs = jobsData.map(job => ({
-          ...job,
-          requirements: Array.isArray(job.requirements) 
-            ? job.requirements.filter(r => r) // Remove empty items
-            : job.requirements 
-              ? [job.requirements.toString()] // Convert to array if it's a single value
-              : [] // Default to empty array
-        }));
+        // Filter out demo jobs and normalize job data to ensure requirements is always an array
+        const normalizedJobs = jobsData
+          .filter(job => !job.title?.toLowerCase().includes('demo') && 
+                        !job.companyName?.toLowerCase().includes('demo'))
+          .map(job => ({
+            ...job,
+            requirements: Array.isArray(job.requirements) 
+              ? job.requirements.filter(r => r) // Remove empty items
+              : job.requirements 
+                ? [job.requirements.toString()] // Convert to array if it's a single value
+                : [] // Default to empty array
+          }));
         
         setJobs(normalizedJobs);
         
@@ -198,6 +201,7 @@ const JobListing = () => {
           type: 'error',
           message: 'Failed to verify your candidate status. Please try again or contact support.'
         });
+        console.log(roleError)
         return;
       }
   
@@ -227,6 +231,7 @@ const JobListing = () => {
   
       // Submit application
       const result = await applyToJob(user.uid, selectedJobId, applicationData);
+      console.log(result)
       
       // Update UI state
       setAppliedJobIds(prev => ({ ...prev, [selectedJobId]: true }));
@@ -405,7 +410,6 @@ const JobListing = () => {
                             {job.location}
                           </div>
                           <div className="flex items-center">
-                            <DollarSign className="h-4 w-4 mr-1" />
                             {job.minSalary}LPA- {job.maxSalary}LPA
                           </div>
                           <div className="flex items-center">
